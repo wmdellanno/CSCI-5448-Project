@@ -1,0 +1,9 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    ReadGameFile.java
+ Date:    6/4/10
+ Author:  Bill Dell'Anno
+ Purpose: Reads in the text file with the game moves
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+public class ReadGameFile {
+}

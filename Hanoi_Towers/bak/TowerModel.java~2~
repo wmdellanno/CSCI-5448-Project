@@ -1,0 +1,25 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    TowerModel.java
+ Date:    01/24/10
+ Author:  Bill Dell'Anno
+ Purpose: Creates array of three towers and contains logic to verify moves
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+import javax.swing.*;
+
+public class TowerModel {
+
+    Tower[] towers = new Tower[3];
+
+    public boolean checkMove(int to, int from){ // returns true if move is legal
+        if(towers[from].emptyTower()){// if tower does not have any discs, gives error message
+            JOptionPane.showMessageDialog(null,"There are no discs to move.","Movement Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (towers[from].getDisc()>towers[to].getDisc()){ // if disc is being moved onto a smaller disc, gives error message
+            JOptionPane.showMessageDialog(null,"You cannot move a bigger disc onto a smaller one.","Movement Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+        }else{ // move is legal
+            return true;
+        }
+    }
+}

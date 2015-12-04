@@ -1,0 +1,27 @@
+import javax.swing.JFrame;
+import java.util.ArrayList;
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    File:    TestStuff.java
+    Date:    June 4, 2010
+    Author:  Bill Dell'Anno
+    Purpose:
+   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+public class TestStuff {
+    public static void main(String[] args) {
+        /*
+                 ConnectFourFrame frame = new ConnectFourFrame(true);
+                 frame.setSize(310, 220);
+                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                 frame.setTitle("Connect Four");
+                 frame.setVisible(true);
+         */
+        ReadGameFile rgf = new ReadGameFile();
+        ArrayList list = rgf.loadMoves("test.txt");
+        for (Object obj : list) {
+            System.out.println(obj);
+        }
+
+    }
+}

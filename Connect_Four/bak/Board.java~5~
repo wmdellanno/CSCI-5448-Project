@@ -1,0 +1,13 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    Board.java
+ Date:    6/4/10
+ Author:  Bill Dell'Anno
+ Purpose: Creates a board object with an array of 7 column objects
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
+public class Board {
+
+    public Column[] columns = new Column[7];
+
+}

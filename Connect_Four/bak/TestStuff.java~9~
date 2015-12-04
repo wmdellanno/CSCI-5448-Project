@@ -1,0 +1,17 @@
+import javax.swing.JFrame;
+import java.util.ArrayList;
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    File:    TestStuff.java
+    Date:    June 4, 2010
+    Author:  Bill Dell'Anno
+    Purpose:
+   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+public class TestStuff {
+    private static Board newBoard = new Board();
+    public static void main(String[] args) {
+        newBoard.getColumn(0);//.refreshColumn();
+
+    }
+}
