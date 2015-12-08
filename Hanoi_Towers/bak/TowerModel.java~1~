@@ -1,0 +1,13 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    TowerModel.java
+ Date:    01/24/10
+ Author:  Bill Dell'Anno
+ Purpose: Creates array of three towers and contains logic to verify moves
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+public class TowerModel {
+
+    Tower[] towers = new Tower[3];
+
+
+}

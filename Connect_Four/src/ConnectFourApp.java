@@ -1,0 +1,19 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    ConnectFourApp.java
+ Date:    6/4/10
+ Author:  Bill Dell'Anno
+ Purpose:
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+import javax.swing.JFrame;
+
+public class ConnectFourApp {
+    public static void main(String[] args) {
+        ConnectFourMenu menu = new ConnectFourMenu();
+        menu.setSize(310, 220);
+        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menu.setTitle("Connect Four");
+        menu.setVisible(true);
+
+    }
+}

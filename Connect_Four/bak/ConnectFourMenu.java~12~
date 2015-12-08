@@ -1,0 +1,78 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    ConnectFourMenu.java
+ Date:    6/4/10
+ Author:  Bill Dell'Anno
+ Purpose:
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Rectangle;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.SystemColor;
+
+public class ConnectFourMenu extends JFrame implements ActionListener {
+    public ConnectFourMenu() {
+        try {
+            jbInit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == twoplayerBUT) {
+            ConnectFourFrame frame = new ConnectFourFrame(false);
+            frame.setSize(475, 450);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setTitle("Connect Four - Two Player Mode");
+            frame.setVisible(true);
+        } else {
+            ConnectFourFrame frame = new ConnectFourFrame(true);
+            frame.setSize(475, 450);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setTitle("Connect Four - AutoPlay Mode");
+            frame.setVisible(true);
+
+        }
+
+    }
+
+    private void jbInit() throws Exception {
+        this.getContentPane().setLayout(null);
+        autoplayBUT.setBounds(new Rectangle(50, 125, 200, 40));
+        autoplayBUT.setFont(new java.awt.Font("Tahoma", Font.PLAIN, 16));
+        autoplayBUT.setText("Auto Play Game");
+        twoplayerBUT.setBounds(new Rectangle(50, 75, 200, 40));
+        twoplayerBUT.setFont(new java.awt.Font("Tahoma", Font.PLAIN, 16));
+        twoplayerBUT.setText("Two Player Game");
+        title2TF.setBackground(new Color(236, 233, 216));
+        title2TF.setFont(new java.awt.Font("Tahoma", Font.PLAIN, 18));
+        title2TF.setBorder(null);
+        title2TF.setEditable(false);
+        title2TF.setText("you like to play?");
+        title2TF.setHorizontalAlignment(SwingConstants.CENTER);
+        title2TF.setBounds(new Rectangle(25, 35, 250, 30));
+        title1TF.setBackground(new Color(236, 233, 216));
+        title1TF.setFont(new java.awt.Font("Tahoma", Font.PLAIN, 18));
+        title1TF.setBorder(null);
+        title1TF.setEditable(false);
+        title1TF.setText("What type of game would");
+        title1TF.setHorizontalAlignment(SwingConstants.CENTER);
+        title1TF.setBounds(new Rectangle(25, 5, 250, 30));
+        this.getContentPane().setBackground(SystemColor.control);
+        this.getContentPane().add(twoplayerBUT);
+        this.getContentPane().add(autoplayBUT);
+        this.getContentPane().add(title1TF);
+        this.getContentPane().add(title2TF);
+        twoplayerBUT.addActionListener(this);
+        autoplayBUT.addActionListener(this);
+    }
+
+    JButton autoplayBUT = new JButton();
+    JButton twoplayerBUT = new JButton();
+    JTextField title2TF = new JTextField();
+    JTextField title1TF = new JTextField();
+}

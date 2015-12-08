@@ -1,0 +1,345 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    TowersFrame.java
+ Date:    1/22/10
+ Author:  Bill Dell'Anno
+ Purpose: Towers of Hanoi Frame
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+import javax.swing.JFrame;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Rectangle;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.SystemColor;
+
+public class TowersFrame extends JFrame implements ActionListener {
+    public TowersFrame() {
+        try {
+            jbInit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    TowerModel tm = new TowerModel(); // creates towers and holds logic to play game
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == startBUT) {
+            startGame();
+        } else if (e.getSource() == LtoRBUT) {
+            if (tm.checkMove(2, 0)) {
+                testPrint(renderTowers(2,0));
+                //paintTowers(renderTowers(2, 0));
+            }
+        } else if (e.getSource() == LtoMBUT) {
+            if (tm.checkMove(1, 0)) {
+                testPrint(renderTowers(1,0));
+               // paintTowers(renderTowers(1, 0));
+            }
+        } else if (e.getSource() == MtoLBUT) {
+            if (tm.checkMove(0, 1)) {
+                testPrint(renderTowers(0,1));
+                //paintTowers(renderTowers(0, 1));
+            }
+        } else if (e.getSource() == MtoRBUT) {
+            if (tm.checkMove(2, 1)) {
+                testPrint(renderTowers(2,1));
+                //paintTowers(renderTowers(2, 1));
+            }
+        } else if (e.getSource() == RtoLBUT) {
+            if (tm.checkMove(0, 2)) {
+                paintTowers(renderTowers(0, 2));
+            }
+        } else if (e.getSource() == RtoMBUT) {
+            if (tm.checkMove(1, 2)) {
+                paintTowers(renderTowers(1, 2));
+            }
+        }
+        if (tm.checkWin()) {
+            JOptionPane.showMessageDialog(null,
+                                          "You have won the Towers of Hanoi.",
+                                          "CONGRADULATIONS!",
+                                          JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public void startGame() { // sets everything up for game
+        tm.buildTowers();
+        tm.towers[0].fillTower();
+        startBUT.setEnabled(false);
+        LtoMBUT.setEnabled(true);
+        LtoRBUT.setEnabled(true);
+        MtoLBUT.setEnabled(true);
+        MtoRBUT.setEnabled(true);
+        RtoLBUT.setEnabled(true);
+        RtoMBUT.setEnabled(true);
+        T1D1TF.setText("X");
+        T1D2TF.setText("X   X");
+        T1D3TF.setText("X   X   X");
+    }
+
+    public int[][] renderTowers(int to, int from) {
+        ArrayListStack tempTo = new ArrayListStack();
+        ArrayListStack tempFrom = new ArrayListStack();
+        int[][] temp = new int[3][3];
+        while (!tm.towers[to].emptyTower()) { // puts "to" tower on temp stack
+            tempTo.push(tm.towers[to].removeDisc());
+        } while (!tm.towers[from].emptyTower()) { // puts "from" tower on temp stack
+            tempFrom.push(tm.towers[from].removeDisc());
+        }
+        for (int i = 0; !tempTo.isEmpty(); i++) { //renders "to" tower until its empty and puts discs back on orig stack
+            temp[to][i] = (Integer) tempTo.peekTop();
+            tm.towers[to].addDisc((Integer) tempTo.pop());
+        }
+        for (int i = 0; !tempFrom.isEmpty(); i++) { //renders "from" tower until its empty and puts discs back on orig stack
+            temp[from][i] = (Integer) tempFrom.peekTop();
+            tm.towers[from].addDisc((Integer) tempFrom.pop());
+        }
+        return temp;
+    }
+
+    public void testPrint(int[][] temp) {
+        for (int i = 0; i < temp.length; i++) {
+            for (int j = 0; j < temp[i].length; j++) {
+                System.out.println(temp[i][j]);
+            }
+        }
+    }
+
+    public void paintTowers(int[][] matrix) {
+        for (int i = 0; matrix.length > i; i++) { // "i" represents tower
+            for (int j = 0; matrix[i].length > j; j++) { // "j" represents disc
+                if (i == 0) {
+                    if (j == 0) {
+                        if (matrix[i][j] == 3) {
+                            T1D3TF.setText("X   X   X");
+                        } else if (matrix[i][j] == 2) {
+                            T1D3TF.setText("X   X");
+                        } else if (matrix[i][j] == 1) {
+                            T1D3TF.setText("X");
+                        } else {
+                            T1D3TF.setText("");
+                        }
+                    }
+                    if (j == 1) {
+                        if (matrix[i][j] == 2) {
+                            T1D2TF.setText("X   X");
+                        } else if (matrix[i][j] == 1) {
+                            T1D2TF.setText("X");
+                        } else {
+                            T1D2TF.setText("");
+                        }
+                    }
+                    if (j == 2) {
+                        if (matrix[i][j] == 1) {
+                            T1D1TF.setText("X");
+                        } else {
+                            T1D1TF.setText("");
+                        }
+                    }
+                }
+                if (i == 1) {
+                    if (j == 0) {
+                        if (matrix[i][j] == 3) {
+                            T2D3TF.setText("X   X   X");
+                        } else if (matrix[i][j] == 2) {
+                            T2D3TF.setText("X   X");
+                        } else if (matrix[i][j] == 1) {
+                            T2D3TF.setText("X");
+                        } else {
+                            T2D3TF.setText("");
+                        }
+                    }
+                    if (j == 1) {
+                        if (matrix[i][j] == 2) {
+                            T2D2TF.setText("X   X");
+                        } else if (matrix[i][j] == 1) {
+                            T2D2TF.setText("X");
+                        } else {
+                            T2D2TF.setText("");
+                        }
+                    }
+                    if (j == 2) {
+                        if (matrix[i][j] == 1) {
+                            T2D1TF.setText("X");
+                        } else {
+                            T2D1TF.setText("");
+                        }
+                    }
+                }
+                if (i == 2) {
+                    if (j == 0) {
+                        if (matrix[i][j] == 3) {
+                            T3D3TF.setText("X   X   X");
+                        } else if (matrix[i][j] == 2) {
+                            T3D3TF.setText("X   X");
+                        } else if (matrix[i][j] == 1) {
+                            T3D3TF.setText("X");
+                        } else {
+                            T3D3TF.setText("");
+                        }
+                    }
+                    if (j == 1) {
+                        if (matrix[i][j] == 2) {
+                            T3D2TF.setText("X   X");
+                        } else if (matrix[i][j] == 1) {
+                            T3D2TF.setText("X");
+                        } else {
+                            T3D2TF.setText("");
+                        }
+                    }
+                    if (j == 2) {
+                        if (matrix[i][j] == 1) {
+                            T3D1TF.setText("X");
+                        } else {
+                            T3D1TF.setText("");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void jbInit() throws Exception {
+        this.getContentPane().setLayout(null);
+        MtoLBUT.setBounds(new Rectangle(245, 300, 110, 35));
+        MtoLBUT.setEnabled(false);
+        MtoLBUT.setText("Mid to Left");
+        MtoRBUT.setBounds(new Rectangle(245, 250, 110, 35));
+        MtoRBUT.setEnabled(false);
+        MtoRBUT.setToolTipText("");
+        MtoRBUT.setText("Mid to Right");
+        RtoLBUT.setBounds(new Rectangle(420, 250, 110, 35));
+        RtoLBUT.setEnabled(false);
+        RtoLBUT.setText("Right to Left");
+        RtoMBUT.setBounds(new Rectangle(420, 300, 110, 35));
+        RtoMBUT.setEnabled(false);
+        RtoMBUT.setText("Right to Mid");
+        LtoRBUT.setBounds(new Rectangle(70, 250, 110, 35));
+        LtoRBUT.setEnabled(false);
+        LtoRBUT.setText("Left to Right");
+        LtoMBUT.setBounds(new Rectangle(70, 300, 110, 35));
+        LtoMBUT.setEnabled(false);
+        LtoMBUT.setText("Left to Mid");
+        T3D1TF.setBackground(Color.green);
+        T3D1TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T3D1TF.setBorder(null);
+        T3D1TF.setEditable(false);
+        T3D1TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T3D1TF.setBounds(new Rectangle(450, 100, 50, 40));
+        T3D3TF.setBackground(Color.green);
+        T3D3TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T3D3TF.setForeground(Color.black);
+        T3D3TF.setBorder(null);
+        T3D3TF.setEditable(false);
+        T3D3TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T3D3TF.setBounds(new Rectangle(400, 200, 150, 40));
+        T2D3TF.setBackground(Color.green);
+        T2D3TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T2D3TF.setBorder(null);
+        T2D3TF.setEditable(false);
+        T2D3TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T2D3TF.setBounds(new Rectangle(225, 200, 150, 40));
+        T1D3TF.setBackground(Color.green);
+        T1D3TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T1D3TF.setBorder(null);
+        T1D3TF.setEditable(false);
+        T1D3TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T1D3TF.setBounds(new Rectangle(50, 200, 150, 40));
+        T3D2TF.setBackground(Color.green);
+        T3D2TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T3D2TF.setBorder(null);
+        T3D2TF.setEditable(false);
+        T3D2TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T3D2TF.setBounds(new Rectangle(425, 150, 100, 40));
+        T1D1TF.setBackground(Color.green);
+        T1D1TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T1D1TF.setBorder(null);
+        T1D1TF.setDisabledTextColor(Color.black);
+        T1D1TF.setEditable(false);
+        T1D1TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T1D1TF.setBounds(new Rectangle(100, 100, 50, 40));
+        T1D2TF.setBackground(Color.green);
+        T1D2TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T1D2TF.setBorder(null);
+        T1D2TF.setEditable(false);
+        T1D2TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T1D2TF.setBounds(new Rectangle(75, 150, 100, 40));
+        T2D1TF.setBackground(Color.green);
+        T2D1TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T2D1TF.setBorder(null);
+        T2D1TF.setEditable(false);
+        T2D1TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T2D1TF.setBounds(new Rectangle(275, 100, 50, 40));
+        T2D2TF.setBackground(Color.green);
+        T2D2TF.setFont(new java.awt.Font("Dialog", Font.PLAIN, 24));
+        T2D2TF.setBorder(null);
+        T2D2TF.setDisabledTextColor(Color.black);
+        T2D2TF.setEditable(false);
+        T2D2TF.setHorizontalAlignment(SwingConstants.CENTER);
+        T2D2TF.setBounds(new Rectangle(250, 150, 100, 40));
+        titleTF.setBackground(Color.red);
+        titleTF.setFont(new java.awt.Font("Tahoma", Font.PLAIN, 36));
+        titleTF.setBorder(null);
+        titleTF.setEditable(false);
+        titleTF.setText("Towers of Hanoi");
+        titleTF.setHorizontalAlignment(SwingConstants.CENTER);
+        titleTF.setBounds(new Rectangle(150, 25, 300, 50));
+        this.getContentPane().setBackground(Color.red);
+        startBUT.setBounds(new Rectangle(25, 35, 100, 30));
+        startBUT.setFont(new java.awt.Font("Tahoma", Font.PLAIN, 13));
+        startBUT.setToolTipText("");
+        startBUT.setSelectedIcon(null);
+        startBUT.setText("Start Game");
+
+        this.getContentPane().add(MtoRBUT);
+        this.getContentPane().add(MtoLBUT);
+        this.getContentPane().add(LtoRBUT);
+        this.getContentPane().add(LtoMBUT);
+        this.getContentPane().add(RtoLBUT);
+        this.getContentPane().add(RtoMBUT);
+        this.getContentPane().add(T2D3TF);
+        this.getContentPane().add(T1D3TF);
+        this.getContentPane().add(T3D3TF);
+        this.getContentPane().add(T1D1TF);
+        this.getContentPane().add(T1D2TF);
+        this.getContentPane().add(T2D1TF);
+        this.getContentPane().add(T2D2TF);
+        this.getContentPane().add(T3D1TF);
+        this.getContentPane().add(T3D2TF);
+        this.getContentPane().add(titleTF);
+        this.getContentPane().add(startBUT);
+
+        startBUT.addActionListener(this);
+        LtoRBUT.addActionListener(this);
+        LtoMBUT.addActionListener(this);
+        MtoLBUT.addActionListener(this);
+        MtoRBUT.addActionListener(this);
+        RtoLBUT.addActionListener(this);
+        RtoMBUT.addActionListener(this);
+    }
+
+    JButton MtoLBUT = new JButton();
+    JButton MtoRBUT = new JButton();
+    JButton RtoLBUT = new JButton();
+    JButton RtoMBUT = new JButton();
+    JButton LtoRBUT = new JButton();
+    JButton LtoMBUT = new JButton();
+    JTextField T3D1TF = new JTextField();
+    JTextField T3D3TF = new JTextField();
+    JTextField T2D3TF = new JTextField();
+    JTextField T1D3TF = new JTextField();
+    JTextField T3D2TF = new JTextField();
+    JTextField T1D1TF = new JTextField();
+    JTextField T1D2TF = new JTextField();
+    JTextField T2D1TF = new JTextField();
+    JTextField T2D2TF = new JTextField();
+    JTextField titleTF = new JTextField();
+    JButton startBUT = new JButton();
+
+}

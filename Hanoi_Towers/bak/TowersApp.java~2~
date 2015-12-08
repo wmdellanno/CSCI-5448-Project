@@ -1,0 +1,19 @@
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ File:    TowersApp.java
+ Date:    1/22/10
+ Author:  Bill Dell'Anno
+ Purpose: Creates instance of TowersFrame
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+import java.awt.*;
+import javax.swing.JFrame;
+
+public class TowersApp {
+    public static void main(String[] args) {
+        TOHFrame f = new TOHFrame();
+        f.setSize(650,400);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setTitle("Towers of Hanoi");
+        f.setVisible(true);
+    }
+}
